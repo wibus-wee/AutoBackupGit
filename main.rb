@@ -17,6 +17,11 @@ unless File.directory?(backup_dir)
   FileUtils.mkdir_p(backup_dir)
 end
 
+# 删除备份目录下的全部压缩文件
+Dir.glob(File.join(backup_dir, "*.zip")).each do |file|
+  FileUtils.rm_rf(file)
+end
+
 # 遍历所有的仓库URL
 repo_urls.each do |repo_url|
   # 生成备份的目录名（基于当前时间和仓库名的md5）
@@ -24,7 +29,7 @@ repo_urls.each do |repo_url|
   repo_name = repo_url.split("/").last.gsub(".git", "")
   repo_name_md5 = Digest::MD5.hexdigest(repo_name)
   timestamp = Time.now.strftime("%Y%m%d%H%M%S")
-  backup_repo_dir = File.join(backup_dir, "#{repo_name_md5}_#{timestamp}")
+  backup_repo_dir = File.join(backup_dir, repo_name_md5, "#{timestamp}")
 
   # 如果不是开发模式，执行git clone命令
   if dev_mode
