@@ -21,3 +21,9 @@
 ## 开发模式
 
 在 `main.rb` 文件中，你可以设置 `dev_mode` 为 `true`，这样脚本在执行 `git clone` 命令时，只会打印命令，而不会真正执行。这对于测试和调试非常有用。
+
+## MD5 Directory Name
+
+```shell
+md5 -s 91QiuChen
+```
