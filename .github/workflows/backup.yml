@@ -1,4 +1,4 @@
-name: Format
+name: Backup
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
     - cron: '0 12 * * *'
 
 jobs:
-  format-code:
+  backupGit:
     runs-on: ubuntu-latest
 
     permissions:
