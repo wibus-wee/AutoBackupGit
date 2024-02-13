@@ -3,6 +3,8 @@ require 'digest/md5'
 
 # Git仓库的URL数组
 repo_urls = ["https://github.com/QiuChenlyOpenSource/91QiuChen.git"]
+# 最多备份个数
+max_backup_count = 10
 
 # 备份目录路径
 backup_dir = "./backup"
@@ -43,6 +45,13 @@ repo_urls.each do |repo_url|
     if File.exist?(backup_zip_file)
       FileUtils.rm_rf(backup_repo_dir)
       puts "Backup of #{repo_url} removed"
+    end
+    # 检查备份个数，如果超过 max_backup_count 个，删除最早的一个
+    backup_files = Dir.glob(File.join(backup_dir, "#{repo_name_md5}_*"))
+    if backup_files.length > max_backup_count
+      oldest_backup_file = backup_files.sort.first
+      FileUtils.rm_rf(oldest_backup_file)
+      puts "Oldest backup #{oldest_backup_file} removed"
     end
   end
 end
