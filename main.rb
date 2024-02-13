@@ -26,10 +26,13 @@ repo_urls.each do |repo_url|
 
   # 如果不是开发模式，执行git clone命令
   if dev_mode
-    puts "Would execute: git clone #{repo_url} #{backup_repo_dir}"
+    puts "Would execute: git clone #{repo_url} #{backup_repo_dir} --depth 1"
   else
-    `git clone #{repo_url} #{backup_repo_dir}`
+    `git clone #{repo_url} #{backup_repo_dir} --depth 1`
     puts "Backup of #{repo_url} taken in #{backup_repo_dir}"
+    # 删除 .git 目录
+    FileUtils.rm_rf(File.join(backup_repo_dir, ".git"))
+    puts "Removed .git directory from #{backup_repo_dir}"
     # 如果备份成功，将备份的目录压缩为zip文件
     if File.directory?(backup_repo_dir)
       backup_zip_file = "#{backup_repo_dir}.zip"

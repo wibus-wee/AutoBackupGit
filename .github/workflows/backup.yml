@@ -22,3 +22,5 @@ jobs:
       - run: |
           ruby main.rb
       - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: backup
