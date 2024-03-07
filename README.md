@@ -26,4 +26,5 @@
 
 ```shell
 md5 -s 91QiuChen
+md5 -s yuzu
 ```
