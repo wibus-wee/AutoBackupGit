@@ -2,7 +2,10 @@ require 'fileutils'
 require 'digest/md5'
 
 # Git仓库的URL数组
-repo_urls = ["https://github.com/QiuChenlyOpenSource/91QiuChen.git"]
+repo_urls = [
+  "https://github.com/QiuChenlyOpenSource/91QiuChen.git",
+  "https://github.com/yuzu-mirror/yuzu.git"
+  ]
 # 最多备份个数
 max_backup_count = 10
 
