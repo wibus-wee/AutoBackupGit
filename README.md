@@ -14,6 +14,9 @@
 
 ## GitHub Actions 自动备份
 
+> [!NOTE]
+> 为了减少无用的备份，目前会检查备份分支上的最新提交时间，如果最后一次 commit 之后有备份，就取消这次备份，不会再次备份。
+
 你可以使用 GitHub Actions 来自动执行备份操作。只需将此仓库推送到你的 GitHub 账户，然后在 `Settings` -> `Secrets` 中添加你的 Git 仓库 URL。然后，GitHub Actions 就会每天在 UTC 时间 12:00 执行备份操作，并将备份文件推送到 `backup` 分支。
 
 注意：在 `backup.yml` 文件中，你可能需要修改 `branch` 参数，以匹配你的备份分支名称。
@@ -25,6 +28,6 @@
 ## MD5 Directory Name
 
 ```shell
-md5 -s 91QiuChen
-md5 -s yuzu
+MD5 ("91QiuChen") = 918d241a56d699f6a260b4fb16e482cb
+MD5 ("yuzu") = 72a5383b2a8ed85ec924391519f3f157
 ```
