@@ -46,11 +46,11 @@ repo_urls.each do |repo_url|
     `git clone #{repo_url} #{backup_repo_dir} --depth 1`
     puts "Backup of #{repo_url} taken in #{backup_repo_dir}"
     # 获取最近一次备份仓库的时间（找文件）
-    last_backup_file = Dir.glob(File.join(backup_dir, "#{repo_name_md5}_*")).sort.last
-    last_backup_time = last_backup_file.split("_").last
+    last_backup_file = Dir.glob(File.join(backup_dir, repo_name_md5, "*")).sort.last
+    last_backup_time = File.mtime(last_backup_file)
     puts "Last backup time: #{last_backup_time}"
     # 检查最近一次 commit 的时间
-    last_commit_time = `cd #{backup_repo_dir} && git log -1 --format=%cd`
+    last_commit_time = `cd #{backup_repo_dir} && git log -1 --format=%cd`.chomp
     puts "Last commit time: #{last_commit_time}"
     # 减少备份的次数：如果最后一次 commit 之后有备份，就取消这次备份
     if last_backup_time >= last_commit_time
