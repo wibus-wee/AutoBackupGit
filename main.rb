@@ -45,18 +45,18 @@ repo_urls.each do |repo_url|
   else
     `git clone #{repo_url} #{backup_repo_dir} --depth 1`
     puts "Backup of #{repo_url} taken in #{backup_repo_dir}"
+    # 获取最近一次备份仓库的时间（找文件）
+    last_backup_file = Dir.glob(File.join(backup_dir, "#{repo_name_md5}_*")).sort.last
+    last_backup_time = last_backup_file.split("_").last
+    puts "Last backup time: #{last_backup_time}"
     # 检查最近一次 commit 的时间
     last_commit_time = `cd #{backup_repo_dir} && git log -1 --format=%cd`
     puts "Last commit time: #{last_commit_time}"
-    # 和当前备份文件夹下最新的备份进行比较，如果发现这几天没有新的 commit，就不进行备份
-    latest_backup_file = Dir.glob(File.join(backup_dir, "#{repo_name_md5}_*")).sort.last
-    if latest_backup_file
-      latest_backup_time = latest_backup_file.split("_").last
-      if last_commit_time <= latest_backup_time
-        puts "No new commit since last backup, skipping"
-        FileUtils.rm_rf(backup_repo_dir)
-        next
-      end
+    # 减少备份的次数：如果最后一次 commit 之后有备份，就取消这次备份
+    if last_backup_time >= last_commit_time
+      FileUtils.rm_rf(backup_repo_dir)
+      puts "No new commits, backup of #{repo_url} removed"
+      next
     end
     # 删除 .git 目录
     FileUtils.rm_rf(File.join(backup_repo_dir, ".git"))
