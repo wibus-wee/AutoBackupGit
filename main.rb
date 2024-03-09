@@ -63,6 +63,7 @@ repo_urls.each do |repo_url|
       puts "No new commits since last backup. No need to backup"
       FileUtils.rm_rf(backup_repo_dir)
       puts "Backup of #{repo_url} removed. No new commits since last backup"
+      next
     end
     # 删除 .git 目录
     FileUtils.rm_rf(File.join(backup_repo_dir, ".git"))
