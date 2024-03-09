@@ -48,15 +48,20 @@ repo_urls.each do |repo_url|
     # 获取最近一次备份仓库的时间（找文件）
     last_backup_file = Dir.glob(File.join(backup_dir, repo_name_md5, "*")).sort.last
     last_backup_time = File.mtime(last_backup_file)
-    puts "Last backup time: #{last_backup_time}"
+    puts "Last backup time: #{last_backup_time}" # 2024-03-09 16:16:49 +0000
     # 检查最近一次 commit 的时间
     last_commit_time = `cd #{backup_repo_dir} && git log -1 --format=%cd`.chomp
-    puts "Last commit time: #{last_commit_time}"
+    puts "Last commit time: #{last_commit_time}" # Sun Mar 10 00:16:28 2024 +0800
+    # 转换全部时间格式
+    last_commit_time = Time.parse(last_commit_time)
+    puts "Last commit time (parse): #{last_commit_time}" # 2024-03-09 16:16:49 +0000
+    last_backup_time = Time.parse(last_backup_time.to_s)
+    puts "Last backup time (parse): #{last_backup_time}" # 2024-03-09 16:16:49 +0000
     # 减少备份的次数：如果最后一次 commit 之后有备份，就取消这次备份
-    if last_backup_time >= last_commit_time
+    if last_commit_time <= last_backup_time
+      puts "No new commits since last backup. No need to backup"
       FileUtils.rm_rf(backup_repo_dir)
-      puts "No new commits, backup of #{repo_url} removed"
-      next
+      puts "Backup of #{repo_url} removed. No new commits since last backup"
     end
     # 删除 .git 目录
     FileUtils.rm_rf(File.join(backup_repo_dir, ".git"))
