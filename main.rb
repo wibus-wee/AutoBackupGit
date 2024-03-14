@@ -8,6 +8,7 @@ git_base_url = "https://github.com"
 repo_names = [
   "QiuChenlyOpenSource/91QiuChen",
   "yuzu-mirror/yuzu"
+  "suyu-emu/suyu"
 ]
 
 # Git仓库的URL数组
