@@ -30,4 +30,5 @@
 ```shell
 MD5 ("91QiuChen") = 918d241a56d699f6a260b4fb16e482cb
 MD5 ("yuzu") = 72a5383b2a8ed85ec924391519f3f157
+MD5 ("suyu") = 4d0902b58cb9e19563e43e9c1e5b8a1f
 ```
