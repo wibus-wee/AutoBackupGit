@@ -18,7 +18,13 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout main code
+        uses: actions/checkout@v4
+      - name: Checkout backup branch
+        uses: actions/checkout@v4
+        with:
+          ref: backup
+          path: _backup
       - run: |
           ruby main.rb
       - uses: stefanzweifel/git-auto-commit-action@v5
