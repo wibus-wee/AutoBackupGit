@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: backup
-          path: _backup
+          path: backup_branch
       - run: |
           ruby main.rb
       - uses: stefanzweifel/git-auto-commit-action@v5
